@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.logout {
+  position: absolute;
+  padding: 8px 12px;
+  top: 5vh;
+  right: 10%;
+  background-color: red;
+  color: white;
+  font-size: 20px;
+}

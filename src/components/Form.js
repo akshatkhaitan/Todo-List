@@ -1,17 +1,29 @@
 import React from "react";
 import generateUniqueId from 'generate-unique-id';
-function Form({setInputText , todos , setTodos, inputText, setStatus}) {
+import {doc, updateDoc, arrayUnion} from "firebase/firestore"
+import { db } from "../firebase/config";
+
+
+function Form({setInputText , todos , setTodos, inputText, setStatus, user}) {
     const inputTextHandler = (e) => {
         setInputText(e.target.value);
     }
-    const submitToddoHandler = (e) => {
+    const submitToddoHandler = async(e) => {
         e.preventDefault();
-        setTodos([...todos, {text: inputText, completed: false , id: generateUniqueId()}])
+		const key = generateUniqueId();
+        setTodos([...todos, {text: inputText, completed: false , id: key }]);
+		await updateDoc(doc(db, "users", user.uid) , {
+			todo: arrayUnion({text: inputText, completed: false , id: key })
+		});
         setInputText("");
     }
+
+
     const statusHandler = (e) => {
         setStatus(e.target.value);
     }
+
+
 	return (
 		<>
 			<form>
